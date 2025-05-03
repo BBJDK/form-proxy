@@ -1,6 +1,11 @@
 export async function handler(event, context) {
   try {
-    const res = await fetch("https://script.google.com/macros/s/AKfycbyRUjBQOlzB6AiOnM2NnghYfHQotWVylkfYDEunHF5jyLWeLRM2UAdI-28mXkGpKGO8/exec");
+    const res = await fetch("https://script.google.com/macros/s/AKfycbzHnJb0fDbKyGv2fhIgFNskVoQT-1iXWciydBkigKyJrTMyC9M_g9KuFqYUUCssaicy/exec");
+
+    if (!res.ok) {
+      throw new Error("응답 실패: " + res.status);
+    }
+
     const data = await res.json();
 
     return {
@@ -14,7 +19,7 @@ export async function handler(event, context) {
   } catch (err) {
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: "Google API 호출 실패" })
+      body: JSON.stringify({ error: "Google API 호출 실패", detail: err.message })
     };
   }
 }
